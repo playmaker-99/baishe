@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindFlow Journal - Journal Entries</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.0/dist/index.global.js" crossorigin="anonymous"></script>
+  <style type="text/tailwindcss">
+    @layer components {
+    }
+  </style>
+  <script>
+    document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 antialiased selection:bg-indigo-500 selection:text-white">
+  <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden lg:hidden"></div>
+  <div class="flex h-full overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-zinc-900 border-r border-slate-100 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex flex-col justify-between">
+      <div class="flex flex-col flex-1 overflow-y-auto">
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-100 dark:border-zinc-800/80">
+          <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-600 text-white shadow-md">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-slate-900 dark:text-white text-base leading-none">MindFlow</h1>
+            <span class="text-[10px] text-indigo-500 font-semibold tracking-wider uppercase mt-1 block">Learner Journal</span>
+          </div>
+        </div>
+        <nav class="px-3 py-4 space-y-1">
+          <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="layout-dashboard" class="w-4.5 h-4.5"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="journal.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/20 font-semibold text-xs transition-all">
+            <i data-lucide="book-open" class="w-4.5 h-4.5"></i>
+            <span>Journal Entries</span>
+          </a>
+          <a href="skills.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+            <span>Skill Matrix</span>
+          </a>
+          <a href="goals.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="target" class="w-4.5 h-4.5"></i>
+            <span>Goals & Habits</span>
+          </a>
+          <a href="resources.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="library" class="w-4.5 h-4.5"></i>
+            <span>Resource Hub</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="settings" class="w-4.5 h-4.5"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+      <div class="p-4 border-t border-slate-100 dark:border-zinc-800/80 space-y-4">
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 dark:bg-zinc-800/40">
+          <div class="flex justify-between items-center mb-1.5">
+            <span id="sb-level" class="text-xs font-bold text-slate-900 dark:text-white">Lvl 4</span>
+            <span id="sb-xp-text" class="text-[10px] font-semibold text-indigo-500">450/1000 XP</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div id="sb-xp-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: 45%;"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 bg-slate-50/50 dark:bg-zinc-900 border border-slate-100 p-2.5 rounded-xl">
+          <div class="relative">
+            <img id="sb-avatar-img" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-50" src="" alt="Avatar">
+            <div class="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white rounded-full flex items-center justify-center border-2"><span class="text-[8px] font-bold" id="sb-streak">12</span></div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate" id="sb-name">Baishe Hamza</h4>
+            <p class="text-[10px] text-slate-500 truncate" id="sb-email">hamzabaishe9@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Panel -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden lg:pl-64">
+      <header class="h-16 border-b border-slate-100 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 flex items-center justify-between px-6 shrink-0 z-20">
+        <div class="flex items-center gap-4">
+          <button id="open-sidebar" class="p-2 -ml-2 rounded-xl text-slate-500 dark:text-zinc-400 hover:bg-slate-50 lg:hidden focus:outline-none">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Learner's Reflection Journal</h2>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Document technical discoveries, insights, and lessons learned</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+            <i data-lucide="sun" class="w-4.5 h-4.5 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-4.5 h-4.5 block dark:hidden"></i>
+          </button>
+          <div class="relative">
+            <button id="notif-btn" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+              <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+              <span id="notif-count" class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white hidden"></span>
+            </button>
+            <div id="notif-dropdown" class="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-100 shadow-xl overflow-hidden hidden z-50">
+              <div class="px-4 py-3 border-b bg-slate-50/50 flex justify-between items-center"><span class="text-xs font-bold text-slate-950 dark:text-white">Notifications</span></div>
+              <div id="notif-list" class="max-h-64 overflow-y-auto"></div>
+            </div>
+          </div>
+          <button id="new-entry-btn" class="flex items-center gap-1.5 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-lg cursor-pointer">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Write Entry</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="flex-1 flex overflow-hidden relative">
+        <section id="entries-sidebar" class="w-full lg:w-[420px] shrink-0 border-r border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 flex flex-col h-full overflow-hidden transition-all duration-300">
+          <div class="p-4 border-b border-slate-100 dark:border-zinc-800 space-y-3 shrink-0 bg-white dark:bg-zinc-900">
+            <div class="relative">
+              <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-slate-400"></i>
+              <input id="search-input" type="text" placeholder="Search entries, keywords, tags..." class="w-full pl-9 pr-4 py-2 border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900 rounded-xl text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+            </div>
+            <div class="flex gap-1 overflow-x-auto pb-1 -mx-2 px-2 select-none" id="category-filter-container">
+              <button class="cat-pill active px-3 py-1.5 rounded-lg text-[11px] font-bold bg-indigo-600 text-white cursor-pointer shrink-0">All</button>
+              <button class="cat-pill px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-50 hover:bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer shrink-0">Technical</button>
+              <button class="cat-pill px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-50 hover:bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer shrink-0">Reflection</button>
+              <button class="cat-pill px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-50 hover:bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer shrink-0">Ideas</button>
+              <button class="cat-pill px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-50 hover:bg-slate-100 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer shrink-0">Project Log</button>
+            </div>
+          </div>
+          <div id="journal-list" class="flex-1 overflow-y-auto divide-y divide-slate-50 dark:divide-zinc-800/50 bg-slate-50/20"></div>
+        </section>
+
+        <section id="content-display-panel" class="absolute lg:static inset-0 bg-slate-50 dark:bg-zinc-950 flex-1 flex flex-col h-full overflow-hidden transform translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-10">
+          <div id="reader-empty-state" class="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400 h-full">
+            <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-zinc-900 border flex items-center justify-center mb-4"><i data-lucide="book-open" class="w-8 h-8 opacity-40"></i></div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Read and Reflect</h3>
+            <p class="text-xs max-w-xs mt-1">Select an entry from the left menu to read, or click "Write Entry" to log a new learning milestone.</p>
+          </div>
+
+          <div id="reader-view" class="flex-1 flex flex-col h-full overflow-hidden hidden bg-white dark:bg-zinc-900">
+            <div class="h-14 border-b border-slate-100 dark:border-zinc-800 px-6 flex items-center justify-between shrink-0 bg-slate-50/50">
+              <button id="close-reader-btn" class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 lg:hidden">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i><span>Back</span>
+              </button>
+              <div class="hidden lg:block text-xs font-semibold text-slate-400" id="read-meta-heading">Reading Entry</div>
+              <div class="flex items-center gap-2">
+                <button id="edit-entry-btn" class="p-2 rounded-lg border text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800 cursor-pointer"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                <button id="delete-entry-btn" class="p-2 rounded-lg border text-rose-500 hover:bg-rose-50 cursor-pointer"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+            <div class="flex-1 overflow-y-auto px-6 py-8 space-y-6">
+              <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="read-category" class="px-2.5 py-0.5 bg-indigo-50 text-indigo-500 text-xs font-bold rounded-full">Technical</span>
+                  <span id="read-mood" class="px-2.5 py-0.5 bg-slate-100 dark:bg-zinc-800 text-slate-600 text-xs font-semibold rounded-full flex items-center gap-1"><span>🤔</span><span id="read-mood-text" class="capitalize">thoughtful</span></span>
+                  <span id="read-date" class="text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span id="read-date-text">2026-06-08</span></span>
+                  <span id="read-duration" class="text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i><span id="read-duration-text">45 mins</span></span>
+                </div>
+                <h2 id="read-title" class="text-xl md:text-2xl font-extrabold text-slate-900 dark:text-white leading-tight"></h2>
+              </div>
+              <div class="border-t border-slate-100 dark:border-zinc-800"></div>
+              <div id="read-content" class="text-sm md:text-base text-slate-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap space-y-4 font-normal"></div>
+              <div class="pt-4 border-t border-slate-50 dark:border-zinc-800">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Associated Tags</p>
+                <div id="read-tags" class="flex flex-wrap gap-1.5"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rich Form Editor -->
+          <div id="editor-view" class="flex-1 flex flex-col h-full overflow-hidden hidden bg-white dark:bg-zinc-900">
+            <form id="entry-form" class="flex flex-col h-full overflow-hidden" onsubmit="event.preventDefault();">
+              <div class="h-14 border-b border-slate-100 dark:border-zinc-800 px-6 flex items-center justify-between shrink-0 bg-slate-50/50">
+                <button type="button" id="cancel-editor-btn" class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 dark:text-zinc-400"><i data-lucide="x" class="w-4 h-4"></i><span>Cancel</span></button>
+                <span class="text-xs font-bold text-slate-950 dark:text-white" id="editor-action-title">Create New Log</span>
+                <button type="button" id="save-entry-btn-trigger" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg cursor-pointer">Save Entry</button>
+              </div>
+              <div class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+                <input type="hidden" id="entry-id" value="">
+                <div class="space-y-1.5">
+                  <label for="entry-title" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Reflection Title</label>
+                  <input type="text" id="entry-title" placeholder="What did you learn today?" required class="w-full px-3 py-2.5 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none focus:border-indigo-500 text-slate-950 dark:text-white">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="space-y-1.5">
+                    <label for="entry-category" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Category</label>
+                    <select id="entry-category" class="w-full px-3 py-2.5 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none focus:border-indigo-500 text-slate-950 dark:text-white">
+                      <option value="Technical">Technical</option>
+                      <option value="Reflection">Reflection</option>
+                      <option value="Ideas">Ideas</option>
+                      <option value="Project Log">Project Log</option>
+                    </select>
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="entry-duration" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Study Duration <span class="text-slate-400 font-medium">(mins)</span></label>
+                    <input type="number" id="entry-duration" placeholder="e.g. 45" min="1" required class="w-full px-3 py-2.5 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none focus:border-indigo-500 text-slate-950 dark:text-white">
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="entry-tags" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Tags <span class="text-slate-400 font-medium">(comma separated)</span></label>
+                    <input type="text" id="entry-tags" placeholder="e.g. CSS, Design" class="w-full px-3 py-2.5 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none focus:border-indigo-500 text-slate-950 dark:text-white">
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-slate-700 dark:text-zinc-300">How did you feel during this study session?</label>
+                  <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="focused" checked class="hidden peer">
+                      <span class="text-lg">🤓</span><span class="text-[10px] font-bold text-slate-500">Focused</span>
+                    </label>
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="excited" class="hidden peer">
+                      <span class="text-lg">🤩</span><span class="text-[10px] font-bold text-slate-500">Excited</span>
+                    </label>
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="thoughtful" class="hidden peer">
+                      <span class="text-lg">🤔</span><span class="text-[10px] font-bold text-slate-500">Thoughtful</span>
+                    </label>
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="tired" class="hidden peer">
+                      <span class="text-lg">🥱</span><span class="text-[10px] font-bold text-slate-500">Tired</span>
+                    </label>
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="happy" class="hidden peer">
+                      <span class="text-lg">😊</span><span class="text-[10px] font-bold text-slate-500">Happy</span>
+                    </label>
+                    <label class="cursor-pointer border border-slate-200 dark:border-zinc-800 rounded-xl p-2.5 flex flex-col items-center gap-1.5 text-center transition-all">
+                      <input type="radio" name="mood-radio" value="stressed" class="hidden peer">
+                      <span class="text-lg">🤯</span><span class="text-[10px] font-bold text-slate-500">Stressed</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="space-y-1.5 flex flex-col flex-1 min-h-[300px]">
+                  <div class="flex justify-between items-center"><label for="entry-content" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Narrative & Reflection</label></div>
+                  <div class="flex items-center gap-1 px-3 py-1.5 border border-b-0 border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900 rounded-t-xl shrink-0">
+                    <button type="button" onclick="insertMD('# ')" class="p-1 hover:bg-slate-200 rounded-md cursor-pointer"><i data-lucide="heading" class="w-3.5 h-3.5"></i></button>
+                    <button type="button" onclick="insertMD('**', '**')" class="p-1 hover:bg-slate-200 rounded-md cursor-pointer"><i data-lucide="bold" class="w-3.5 h-3.5"></i></button>
+                    <button type="button" onclick="insertMD('*', '*')" class="p-1 hover:bg-slate-200 rounded-md cursor-pointer"><i data-lucide="italic" class="w-3.5 h-3.5"></i></button>
+                    <button type="button" onclick="insertMD('`', '`')" class="p-1 hover:bg-slate-200 rounded-md cursor-pointer"><i data-lucide="code" class="w-3.5 h-3.5"></i></button>
+                    <button type="button" onclick="insertMD('- ')" class="p-1 hover:bg-slate-200 rounded-md cursor-pointer"><i data-lucide="list" class="w-3.5 h-3.5"></i></button>
+                  </div>
+                  <textarea id="entry-content" placeholder="Reflect on your learnings..." required class="w-full flex-1 px-3 py-3 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-b-xl text-xs focus:outline-none font-mono resize-none min-h-[250px] text-slate-900 dark:text-white"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    label:has(input[name="mood-radio"]:checked) {
+      border-color: #4f46e5;
+      background-color: rgba(79, 70, 229, 0.04);
+    }
+    .dark label:has(input[name="mood-radio"]:checked) {
+      border-color: #818cf8;
+      background-color: rgba(129, 140, 248, 0.06);
+    }
+  </style>
+  <script src="db.js"></script>
+  <script src="shared.js"></script>
+  <script src="journal.js"></script>
+</body>
+</html>

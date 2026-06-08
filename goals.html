@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindFlow Journal - Goals & Habits</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.0/dist/index.global.js" crossorigin="anonymous"></script>
+  <style type="text/tailwindcss">
+    @layer components {
+    }
+  </style>
+  <script>
+    document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 antialiased selection:bg-indigo-500 selection:text-white">
+  <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden lg:hidden"></div>
+  <div class="flex h-full overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-zinc-900 border-r border-slate-100 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex flex-col justify-between">
+      <div class="flex flex-col flex-1 overflow-y-auto">
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-100 dark:border-zinc-800/80">
+          <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-600 text-white shadow-md">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-slate-900 dark:text-white text-base leading-none">MindFlow</h1>
+            <span class="text-[10px] text-indigo-500 font-semibold tracking-wider uppercase mt-1 block">Learner Journal</span>
+          </div>
+        </div>
+        <nav class="px-3 py-4 space-y-1">
+          <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="layout-dashboard" class="w-4.5 h-4.5"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="journal.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="book-open" class="w-4.5 h-4.5"></i>
+            <span>Journal Entries</span>
+          </a>
+          <a href="skills.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+            <span>Skill Matrix</span>
+          </a>
+          <a href="goals.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/20 font-semibold text-xs transition-all">
+            <i data-lucide="target" class="w-4.5 h-4.5"></i>
+            <span>Goals & Habits</span>
+          </a>
+          <a href="resources.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="library" class="w-4.5 h-4.5"></i>
+            <span>Resource Hub</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="settings" class="w-4.5 h-4.5"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+      <div class="p-4 border-t border-slate-100 dark:border-zinc-800/80 space-y-4">
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 dark:bg-zinc-800/40">
+          <div class="flex justify-between items-center mb-1.5">
+            <span id="sb-level" class="text-xs font-bold text-slate-900 dark:text-white">Lvl 4</span>
+            <span id="sb-xp-text" class="text-[10px] font-semibold text-indigo-500">450/1000 XP</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div id="sb-xp-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: 45%;"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 bg-slate-50/50 dark:bg-zinc-900 border border-slate-100 p-2.5 rounded-xl">
+          <div class="relative">
+            <img id="sb-avatar-img" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-50" src="" alt="Avatar">
+            <div class="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white rounded-full flex items-center justify-center border-2"><span class="text-[8px] font-bold" id="sb-streak">12</span></div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate" id="sb-name">Baishe Hamza</h4>
+            <p class="text-[10px] text-slate-500 truncate" id="sb-email">hamzabaishe9@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden lg:pl-64">
+      <header class="h-16 border-b border-slate-100 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 flex items-center justify-between px-6 shrink-0 z-20">
+        <div class="flex items-center gap-4">
+          <button id="open-sidebar" class="p-2 -ml-2 rounded-xl text-slate-500 dark:text-zinc-400 hover:bg-slate-50 lg:hidden focus:outline-none">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Goals & Habits Tracker Center</h2>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Establish learning goals and cultivate daily streaks</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+            <i data-lucide="sun" class="w-4.5 h-4.5 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-4.5 h-4.5 block dark:hidden"></i>
+          </button>
+          <div class="relative">
+            <button id="notif-btn" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+              <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+              <span id="notif-count" class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white hidden"></span>
+            </button>
+            <div id="notif-dropdown" class="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-100 shadow-xl overflow-hidden hidden z-50">
+              <div class="px-4 py-3 border-b bg-slate-50/50 flex justify-between items-center"><span class="text-xs font-bold text-slate-950 dark:text-white">Notifications</span></div>
+              <div id="notif-list" class="max-h-64 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <section class="lg:col-span-7 bg-white dark:bg-zinc-900 p-5 border border-slate-100 dark:border-zinc-800/80 rounded-2xl space-y-6">
+            <div class="flex justify-between items-center border-b pb-4">
+              <div>
+                <h3 class="text-sm font-bold text-slate-950 dark:text-white">Target Milestones</h3>
+                <p class="text-xs text-slate-500">Define milestones for +150 XP each!</p>
+              </div>
+              <div class="flex border rounded-lg overflow-hidden shrink-0" id="goals-filter-tabs">
+                <button onclick="filterGoals('all')" class="goals-tab-btn active px-3 py-1.5 text-[10px] font-bold bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white cursor-pointer">All</button>
+                <button onclick="filterGoals('pending')" class="goals-tab-btn px-3 py-1.5 text-[10px] font-bold text-slate-500 cursor-pointer border-l border-r">Pending</button>
+                <button onclick="filterGoals('completed')" class="goals-tab-btn px-3 py-1.5 text-[10px] font-bold text-slate-500 cursor-pointer">Completed</button>
+              </div>
+            </div>
+
+            <form id="goal-form" class="p-3.5 bg-slate-50/50 dark:bg-zinc-900/50 border border-slate-100 rounded-2xl flex flex-col sm:flex-row gap-3 items-end" onsubmit="event.preventDefault();">
+              <div class="flex-1 min-w-0 space-y-1.5 w-full">
+                <label for="goal-text-input" class="text-[10px] font-bold text-slate-600 dark:text-zinc-400 uppercase tracking-wider block">Set New Goal</label>
+                <input type="text" id="goal-text-input" placeholder="e.g. Solve 3 Leetcode questions" required class="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+              </div>
+              <div class="grid grid-cols-2 gap-2 shrink-0 w-full sm:w-auto">
+                <div class="space-y-1.5">
+                  <label for="goal-type-input" class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">Tier</label>
+                  <select id="goal-type-input" class="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-zinc-900 rounded-xl text-[11px] focus:outline-none text-slate-900 dark:text-white">
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Long-term">Long-term</option>
+                  </select>
+                </div>
+                <div class="space-y-1.5">
+                  <label for="goal-date-input" class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">Deadline</label>
+                  <input type="date" id="goal-date-input" required class="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-zinc-900 rounded-xl text-[11px] focus:outline-none text-slate-900 dark:text-white">
+                </div>
+              </div>
+              <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold cursor-pointer h-[38px] transition-all">Add Goal</button>
+            </form>
+            <div id="goals-list" class="space-y-3"></div>
+          </section>
+
+          <section class="lg:col-span-5 bg-white dark:bg-zinc-900 p-5 border border-slate-100 dark:border-zinc-800/80 rounded-2xl space-y-6">
+            <div class="border-b pb-4">
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white">Habit Cultivator</h3>
+              <p class="text-xs text-slate-500">Track daily loops to earn +50 XP!</p>
+            </div>
+            <form id="habit-form" class="p-3.5 bg-slate-50/50 dark:bg-zinc-900/50 border border-slate-100 rounded-2xl flex flex-col sm:flex-row gap-3 items-end" onsubmit="event.preventDefault();">
+              <div class="flex-1 min-w-0 space-y-1.5 w-full">
+                <label for="habit-name-input" class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">Habit Name</label>
+                <input type="text" id="habit-name-input" placeholder="e.g. Read 20 mins" required class="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-zinc-900 rounded-xl text-xs focus:outline-none text-slate-900 dark:text-white">
+              </div>
+              <div class="w-full sm:w-auto space-y-1.5 shrink-0">
+                <label for="habit-freq-input" class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">Frequency</label>
+                <select id="habit-freq-input" class="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-zinc-900 rounded-xl text-[11px] focus:outline-none text-slate-900 dark:text-white">
+                  <option value="Daily">Daily</option>
+                  <option value="Weekly">Weekly</option>
+                </select>
+              </div>
+              <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold cursor-pointer h-[38px] transition-all">Track</button>
+            </form>
+            <div id="habits-list" class="space-y-4"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="shared.js"></script>
+  <script src="goals.js"></script>
+</body>
+</html>

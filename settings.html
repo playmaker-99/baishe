@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindFlow Journal - Settings</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.0/dist/index.global.js" crossorigin="anonymous"></script>
+  <script>
+    document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches));
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 antialiased selection:bg-indigo-500 selection:text-white">
+  <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden lg:hidden"></div>
+  <div class="flex h-full overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white dark:bg-zinc-900 border-r border-slate-100 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex flex-col justify-between">
+      <div class="flex flex-col flex-1 overflow-y-auto">
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-100 dark:border-zinc-800/80">
+          <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-600 text-white shadow-md">
+            <i data-lucide="brain" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-slate-900 dark:text-white text-base leading-none">MindFlow</h1>
+            <span class="text-[10px] text-indigo-500 font-semibold tracking-wider uppercase mt-1 block">Learner Journal</span>
+          </div>
+        </div>
+        <nav class="px-3 py-4 space-y-1">
+          <a href="index.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="layout-dashboard" class="w-4.5 h-4.5"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="journal.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="book-open" class="w-4.5 h-4.5"></i>
+            <span>Journal Entries</span>
+          </a>
+          <a href="skills.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+            <span>Skill Matrix</span>
+          </a>
+          <a href="goals.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="target" class="w-4.5 h-4.5"></i>
+            <span>Goals & Habits</span>
+          </a>
+          <a href="resources.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white text-xs transition-all">
+            <i data-lucide="library" class="w-4.5 h-4.5"></i>
+            <span>Resource Hub</span>
+          </a>
+          <a href="settings.html" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/20 font-semibold text-xs transition-all">
+            <i data-lucide="settings" class="w-4.5 h-4.5"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+      <div class="p-4 border-t border-slate-100 dark:border-zinc-800/80 space-y-4">
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 dark:bg-zinc-800/40">
+          <div class="flex justify-between items-center mb-1.5">
+            <span id="sb-level" class="text-xs font-bold text-slate-900 dark:text-white">Lvl 4</span>
+            <span id="sb-xp-text" class="text-[10px] font-semibold text-indigo-500">450/1000 XP</span>
+          </div>
+          <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+            <div id="sb-xp-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full rounded-full transition-all duration-500" style="width: 45%;"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 bg-slate-50/50 dark:bg-zinc-900 border border-slate-100 p-2.5 rounded-xl">
+          <div class="relative">
+            <img id="sb-avatar-img" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-50" src="" alt="Avatar">
+            <div class="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 text-white rounded-full flex items-center justify-center border-2"><span class="text-[8px] font-bold" id="sb-streak">12</span></div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate" id="sb-name">Baishe Hamza</h4>
+            <p class="text-[10px] text-slate-500 truncate" id="sb-email">hamzabaishe9@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden lg:pl-64">
+      <header class="h-16 border-b border-slate-100 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 flex items-center justify-between px-6 shrink-0 z-20">
+        <div class="flex items-center gap-4">
+          <button id="open-sidebar" class="p-2 -ml-2 rounded-xl text-slate-500 dark:text-zinc-400 hover:bg-slate-50 lg:hidden focus:outline-none">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Settings & Workspace</h2>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Manage profile settings and backups</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+            <i data-lucide="sun" class="w-4.5 h-4.5 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-4.5 h-4.5 block dark:hidden"></i>
+          </button>
+          <div class="relative">
+            <button id="notif-btn" class="p-2.5 rounded-xl border border-slate-100 dark:border-zinc-800 text-slate-500 dark:text-zinc-400 hover:bg-slate-50 cursor-pointer">
+              <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+              <span id="notif-count" class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white hidden"></span>
+            </button>
+            <div id="notif-dropdown" class="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 rounded-2xl border border-slate-100 shadow-xl overflow-hidden hidden z-50">
+              <div class="px-4 py-3 border-b bg-slate-50/50 flex justify-between items-center"><span class="text-xs font-bold text-slate-950 dark:text-white">Notifications</span></div>
+              <div id="notif-list" class="max-h-64 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50 dark:bg-zinc-950">
+        <div class="max-w-3xl mx-auto space-y-6">
+          <section class="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-6 rounded-2xl shadow-xs space-y-5">
+            <div class="border-b pb-3">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">Learner Identity Profile</h3>
+              <p class="text-xs text-slate-500">Configure your personal details</p>
+            </div>
+            <form id="profile-form" class="space-y-4" onsubmit="event.preventDefault();">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-1">
+                  <label for="prof-name" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Name</label>
+                  <input type="text" id="prof-name" required class="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 bg-slate-50/50 rounded-xl text-xs focus:outline-none text-slate-900 dark:text-white">
+                </div>
+                <div class="space-y-1">
+                  <label for="prof-email" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Email</label>
+                  <input type="email" id="prof-email" required class="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 bg-slate-50/50 rounded-xl text-xs focus:outline-none text-slate-900 dark:text-white">
+                </div>
+              </div>
+              <div class="space-y-1">
+                <label for="prof-bio" class="text-xs font-bold text-slate-700 dark:text-zinc-300">Bio Statement</label>
+                <textarea id="prof-bio" rows="3" class="w-full px-3 py-2 border border-slate-200 dark:border-zinc-800 bg-slate-50/50 rounded-xl text-xs focus:outline-none resize-none text-slate-800 dark:text-zinc-200"></textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-700 block dark:text-zinc-300">Avatar Selection</label>
+                <div class="flex gap-3 items-center flex-wrap" id="avatar-picker-container">
+                  <img onclick="selectAvatar(this)" class="w-11 h-11 rounded-xl object-cover ring-2 ring-transparent hover:ring-indigo-500 cursor-pointer border border-slate-100" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256&h=256" alt="A1">
+                  <img onclick="selectAvatar(this)" class="w-11 h-11 rounded-xl object-cover ring-2 ring-transparent hover:ring-indigo-500 cursor-pointer border border-slate-100" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256&h=256" alt="A2">
+                  <img onclick="selectAvatar(this)" class="w-11 h-11 rounded-xl object-cover ring-2 ring-transparent hover:ring-indigo-500 cursor-pointer border border-slate-100" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=256&h=256" alt="A3">
+                  <img onclick="selectAvatar(this)" class="w-11 h-11 rounded-xl object-cover ring-2 ring-transparent hover:ring-indigo-500 cursor-pointer border border-slate-100" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=256&h=256" alt="A4">
+                  <div class="flex-1 min-w-[200px]">
+                    <input type="url" id="prof-avatar-url" placeholder="Or paste custom image URL..." class="w-full px-3 py-1.5 border border-slate-200 dark:border-zinc-800 bg-slate-50/50 rounded-xl text-[11px] focus:outline-none text-slate-900 dark:text-white">
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-end pt-2">
+                <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold cursor-pointer">Save Changes</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-6 rounded-2xl shadow-xs space-y-4">
+            <div class="border-b pb-3">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">Workspace Cosmetics</h3>
+              <p class="text-xs text-slate-500">Adjust visual themes</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div onclick="setAppTheme('light')" id="theme-card-light" class="border border-slate-200 dark:border-zinc-800 p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center"><i data-lucide="sun" class="w-4.5 h-4.5"></i></div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900 dark:text-white">Light Theme</h4>
+                    <p class="text-[10px] text-slate-400">Clean slate style</p>
+                  </div>
+                </div>
+                <div class="theme-check-dot w-4 h-4 rounded-full border-2 flex items-center justify-center"></div>
+              </div>
+              <div onclick="setAppTheme('dark')" id="theme-card-dark" class="border border-slate-200 dark:border-zinc-800 p-4 rounded-xl flex items-center justify-between cursor-pointer transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-zinc-800 text-zinc-300 flex items-center justify-center"><i data-lucide="moon" class="w-4.5 h-4.5"></i></div>
+                  <div>
+                    <h4 class="text-xs font-bold text-slate-900 dark:text-white">Dark Theme</h4>
+                    <p class="text-[10px] text-slate-400">Restful dark style</p>
+                  </div>
+                </div>
+                <div class="theme-check-dot w-4 h-4 rounded-full border-2 flex items-center justify-center"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 p-6 rounded-2xl shadow-xs space-y-4">
+            <div class="border-b pb-3">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">Database Backups</h3>
+              <p class="text-xs text-slate-500">Export backups as JSON, or load existing records back in</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border bg-slate-50/20 dark:bg-zinc-900/30 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900 dark:text-white">Export Database Backups</h4>
+                  <p class="text-[10px] text-slate-500">Downloads all entries, hours, streaks, and scores into a `.json` backup file.</p>
+                </div>
+                <button onclick="exportDatabaseFile()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-zinc-800 dark:text-zinc-200 rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center justify-center gap-1.5"><i data-lucide="download" class="w-4 h-4"></i>Download Backup JSON</button>
+              </div>
+              <div class="border bg-slate-50/20 dark:bg-zinc-900/30 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900 dark:text-white">Restore / Import Database</h4>
+                  <p class="text-[10px] text-slate-500">Select a previously downloaded MindFlow backup file (`.json`) to import and sync.</p>
+                </div>
+                <div>
+                  <input type="file" id="db-file-picker" accept=".json" class="hidden" onchange="importDatabaseFile(this)">
+                  <button onclick="document.getElementById('db-file-picker').click();" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-zinc-800 dark:text-zinc-200 rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center justify-center gap-1.5"><i data-lucide="upload" class="w-4 h-4"></i>Select Backup File</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bg-rose-50/25 dark:bg-rose-950/5 border border-rose-100 dark:border-rose-950/20 p-6 rounded-2xl shadow-xs space-y-4">
+            <div>
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-rose-600">Danger Zone</h3>
+              <p class="text-xs text-slate-500">Destructive operations that immediately change local memory</p>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 p-4 border border-rose-100 bg-white dark:bg-zinc-900 rounded-xl">
+              <div>
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white">Reset Application Data</h4>
+                <p class="text-[10px] text-slate-500">Deletes all custom entries, hours, and goals. Restores mock defaults.</p>
+              </div>
+              <button onclick="confirmSystemWipe()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all">Wipe & Reset Systems</button>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="shared.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
